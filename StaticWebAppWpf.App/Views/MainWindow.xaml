@@ -10,6 +10,7 @@
         Title="MainWindow" Height="450" Width="800">
     <DockPanel>
         <wv2:WebView2 Name="webView"
-                      Source="{Binding StaticWebSource}"/>
+                      Source="{Binding StaticWebSource}"
+                      CoreWebView2InitializationCompleted="webView_CoreWebView2InitializationCompleted"/>
     </DockPanel>
 </Window>

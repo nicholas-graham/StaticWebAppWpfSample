@@ -1,16 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Web.WebView2.Wpf;
+using StaticWebAppWpf.App.Messaging.Models;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace StaticWebAppWpf.App.Views
 {
@@ -29,6 +20,25 @@ namespace StaticWebAppWpf.App.Views
         {
             await Program.Shutdown();
             base.OnClosing(e);
+        }
+
+        private async void webView_CoreWebView2InitializationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
+        {
+            // attach our messaging contracts to the WebView after it has initialized. 
+            if (e.IsSuccess)
+            {
+                var webView2 = (WebView2)sender;
+                var coreWebView2 = webView2.CoreWebView2;
+                if (coreWebView2 != null)
+                {
+                    coreWebView2.AddHostObjectToScript(nameof(GreetMessage), new GreetMessage());
+                }
+            }
+            else
+            {
+                MessageBox.Show("WebView2 initialization failed, shutting down...");
+                await Program.Shutdown();
+            }
         }
     }
 }

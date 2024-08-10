@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
-using StaticWebAppWpf.App;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace StaticWebAppWpf.App.BackgroundServices.Web
+namespace StaticWebAppWpf.App.BackgroundServices
 {
+    /// <summary>
+    /// Runs a basic web application to serve static files to the WebView2 application.
+    /// </summary>
     public class StaticWebService : BackgroundService
     {
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

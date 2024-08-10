@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "StartApp (Production)": {
+      "commandName": "Project"
+    },
+    "StartApp (Development)": {
+      "commandName": "Project",
+      "commandLineArgs": "-dev"
+    }
+  }
+}

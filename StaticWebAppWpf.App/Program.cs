@@ -2,7 +2,6 @@
 using StaticWebAppWpf.App.Extensions;
 using StaticWebAppWpf.App.Utilities;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace StaticWebAppWpf.App
 {
@@ -11,29 +10,25 @@ namespace StaticWebAppWpf.App
         /// <summary>
         /// The main app host for this WPF application
         /// </summary>
-        public static IHost AppHost { get; }
+        public static IHost? AppHost { get; private set; }
 
         /// <summary>
         /// The web port to serve static files.
         /// </summary>
-        public static int StaticWebPort { get; }
+        public static int? StaticWebPort { get; private set; }
 
-        static Program()
-        {
-            StaticWebPort = PortUtilities.GetAvailablePort();
-            // Set up our DI host inside a static constructor so
-            // is set up before the main method is called and never null.
-
-            AppHost = Host.CreateDefaultBuilder()
-                .ConfigureProcessMonitorServices()
-                .Build();
-        }
-
-        static async Task Main()
+        static async Task Main(string[] args)
         {
             try
             {
-                // store the apphost and start it while we start loading the WPF dlls 
+                AppHost = Host.CreateDefaultBuilder()
+                    .UseEnvironment(EnvironmentParser.GetEnvironment(args))
+                    .ConfigureWpfAppServices()
+                    .Build();
+
+                StaticWebPort = PortUtilities.GetPort(args);
+
+                // store the apphost long running task and start it while we start loading the WPF dlls 
                 var webAppTask = AppHost.RunAsync();
 
                 // start the WPF app on a dedicated STA thread
@@ -54,7 +49,10 @@ namespace StaticWebAppWpf.App
         /// </summary>
         public static async Task Shutdown()
         {
-            await AppHost.StopAsync();
+            var appShutdownTask = AppHost?.StopAsync();
+
+            if (appShutdownTask != null )
+                await appShutdownTask;
 
             App.Current.Dispatcher.Invoke(App.Current.Shutdown);
         }

@@ -13,12 +13,13 @@ namespace StaticWebAppWpf.App.Extensions
         // Ensure the method is not inlined, so you don't
         // need to load any WPF dlls in the Main method
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void StartWpfApp()
+        public static Thread StartWpfApp()
         {
             // Manually invoke an STA thread
-            var staThread = new Thread(InitializeAndRunApp);
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
+            var wpfAppThread = new Thread(InitializeAndRunApp);
+            wpfAppThread.SetApartmentState(ApartmentState.STA);
+            wpfAppThread.Start();
+            return wpfAppThread;
         }
 
         private static void InitializeAndRunApp()
