@@ -32,7 +32,7 @@ namespace StaticWebAppWpf.App
                 var webAppTask = AppHost.RunAsync();
 
                 // start the WPF app on a dedicated STA thread
-                WpfStartup.StartWpfApp();
+                WpfApp.Start();
 
                 // await the web task
                 await webAppTask;
@@ -54,7 +54,7 @@ namespace StaticWebAppWpf.App
             if (appShutdownTask != null )
                 await appShutdownTask;
 
-            App.Current.Dispatcher.Invoke(App.Current.Shutdown);
+            WpfApp.Shutdown();
         }
     }
 }
