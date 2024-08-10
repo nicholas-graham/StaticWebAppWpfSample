@@ -8,24 +8,17 @@ using System.Threading.Tasks;
 
 namespace StaticWebAppWpf.App.Extensions
 {
-    public static class ThreadExtensions
+    public static class WpfStartup
     {
         // Ensure the method is not inlined, so you don't
         // need to load any WPF dlls in the Main method
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        public static void StartWpfApp(this Thread startupThread)
+        public static void StartWpfApp()
         {
-            if (startupThread.GetApartmentState() != ApartmentState.STA)
-            {
-                // Manually invoke an STA thread if we are not in one
-                var staThread = new Thread(InitializeAndRunApp);
-                staThread.SetApartmentState(ApartmentState.STA);
-                staThread.Start();
-            }
-            else
-            {
-                InitializeAndRunApp();
-            }
+            // Manually invoke an STA thread
+            var staThread = new Thread(InitializeAndRunApp);
+            staThread.SetApartmentState(ApartmentState.STA);
+            staThread.Start();
         }
 
         private static void InitializeAndRunApp()

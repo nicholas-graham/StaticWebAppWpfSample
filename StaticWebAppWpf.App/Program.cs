@@ -36,9 +36,8 @@ namespace StaticWebAppWpf.App
                 // store the apphost and start it while we start loading the WPF dlls 
                 var webAppTask = AppHost.RunAsync();
 
-                // start the WPF app using a thread from any state,
-                // if we don't have the STA thread, we will create one.
-                Dispatcher.CurrentDispatcher.Thread.StartWpfApp();
+                // start the WPF app on a dedicated STA thread
+                WpfStartup.StartWpfApp();
 
                 // await the web task
                 await webAppTask;
