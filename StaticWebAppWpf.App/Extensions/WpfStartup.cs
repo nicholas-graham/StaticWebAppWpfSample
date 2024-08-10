@@ -10,6 +10,10 @@ namespace StaticWebAppWpf.App.Extensions
 {
     public static class WpfStartup
     {
+        /// <summary>
+        /// Starts the WPF app on a dedicated STA thread. 
+        /// </summary>
+        /// <returns>The STA thread of the WPF app.</returns>
         // Ensure the method is not inlined, so you don't
         // need to load any WPF dlls in the Main method
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -22,6 +26,9 @@ namespace StaticWebAppWpf.App.Extensions
             return wpfAppThread;
         }
 
+        /// <summary>
+        /// Initializes the MainWindow of the application and then starts the app. 
+        /// </summary>
         private static void InitializeAndRunApp()
         {
             var app = new App();

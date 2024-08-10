@@ -1,3 +1,4 @@
+import type { GreetMessageObject } from "../types/contractTypes";
 import { FunctionTypes } from "../types/FunctionTypes";
 
 export const GetFunctionByName = (functionType: string) => {
@@ -13,13 +14,23 @@ export const GetFunctionByName = (functionType: string) => {
                 alert(response);
             }
         }
-        case FunctionTypes.sayGoodbye: {
+        case FunctionTypes.sayHelloFromObject: {
             return async () => {
-                const response = await window?.chrome.webview.hostObjects.GreetMessageContract.SayGoodbye(
-                    "JavaScript"
+                const messageObject: GreetMessageObject = {
+                    Name: "Javascript",
+                    Message: "This is a message inside a JS object!"
+                };
+
+                // Note this must be run with the "sync" modifier as it is returned as a proxy object. 
+                // Otherwise accessing each property must also be awaited.
+                // Only single argument function calls are supported by .Net so the object must be serialized and de-serialized. 
+                const response: GreetMessageObject = await window?.chrome.webview.hostObjects.sync.GreetMessageContract.SayHelloWithObject(
+                    JSON.stringify(messageObject)
                 );
 
-                alert(response);
+                const responseMessage = `Hello from ${response.Name}, message is ${response.Message}`
+
+                alert(responseMessage);
             }
         }
         case FunctionTypes.sayHelloAfterWait: {

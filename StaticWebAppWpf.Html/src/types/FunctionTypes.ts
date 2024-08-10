@@ -1,6 +1,6 @@
 export enum FunctionTypes {
     sayHello = "SayHello",
     sayHelloAfterWait = "SayHelloAfterWait",
-    sayGoodbye = "SayGoodbye",
+    sayHelloFromObject = "SayGoodbye",
     throwException = "ThrowException"
 }
