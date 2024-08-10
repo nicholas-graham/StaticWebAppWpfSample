@@ -21,8 +21,6 @@ namespace StaticWebAppWpf.App.Extensions
                     // in development we'll use the dev server in astro.
                     services.AddHostedService<StaticWebService>();
                 }
-
-                // Add services here
             });
         }
     }

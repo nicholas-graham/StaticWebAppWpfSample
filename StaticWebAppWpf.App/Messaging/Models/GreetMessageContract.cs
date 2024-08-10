@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace StaticWebAppWpf.App.Messaging.Models
 {
-    public class GreetMessage
+    public class GreetMessageContract
     {
         public string SayHello(string name)
         {
@@ -21,6 +21,17 @@ namespace StaticWebAppWpf.App.Messaging.Models
             var msg = $"Goodbye from {name}, this message was generated in .Net, with information from JavaScript.";
             MessageBox.Show(msg, "WPF Message from JavaScript", MessageBoxButton.OK, MessageBoxImage.Information);
             return msg;
+        }
+
+        public async Task<string> SayHelloAfterWait(string name)
+        {
+            await Task.Delay(1000);
+            return SayHello(name);
+        }
+
+        public void ThrowException()
+        {
+            throw new Exception("This is an exception thrown in .Net");
         }
     }
 }

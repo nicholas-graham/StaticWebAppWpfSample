@@ -31,7 +31,8 @@ namespace StaticWebAppWpf.App.Views
                 var coreWebView2 = webView2.CoreWebView2;
                 if (coreWebView2 != null)
                 {
-                    coreWebView2.AddHostObjectToScript(nameof(GreetMessage), new GreetMessage());
+                    // Add any WebView2 messaging contracts here.
+                    coreWebView2.AddHostObjectToScript(nameof(GreetMessageContract), new GreetMessageContract());
                 }
             }
             else

@@ -8,12 +8,12 @@ namespace StaticWebAppWpf.App
     public class Program
     {
         /// <summary>
-        /// The main app host for this WPF application
+        /// The main app host for this application
         /// </summary>
         public static IHost? AppHost { get; private set; }
 
         /// <summary>
-        /// The web port to serve static files.
+        /// The web port to serve static files or the dev server.
         /// </summary>
         public static int? StaticWebPort { get; private set; }
 
