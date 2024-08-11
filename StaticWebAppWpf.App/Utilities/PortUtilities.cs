@@ -10,7 +10,7 @@ namespace StaticWebAppWpf.App.Utilities
 {
     public static class PortUtilities
     {
-        private const int _devPort = 60000;
+        public const int DevPort = 60000;
         private static readonly IPEndPoint _defaultLoopbackEndpoint = new IPEndPoint(IPAddress.Loopback, port: 0);
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace StaticWebAppWpf.App.Utilities
         public static int GetPort(string[] args)
         {
             if (args.Contains("-dev"))
-                return _devPort;
+                return DevPort;
 
             using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {

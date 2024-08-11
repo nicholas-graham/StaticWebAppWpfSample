@@ -23,20 +23,22 @@ namespace StaticWebAppWpf.App
         /// </summary>
         public static int? StaticWebPort { get; private set; }
 
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             try
             {
                 AppHost = Host.CreateDefaultBuilder()
                     .UseEnvironment(EnvironmentParser.GetEnvironment(args))
-                    .ConfigureWpfAppServices()
+                    .ConfigureWpfAppServices(args)
                     .Build();
 
+                // Resolve the wpf app wrapper only, do not load any WPF dlls until
+                // we explicitly create the app later.
                 WpfApp = AppHost.Services.GetRequiredService<WpfApp>();
 
                 StaticWebPort = PortUtilities.GetPort(args);
 
-                // store the apphost long running task and start it while we start loading the WPF dlls 
+                // start the background services while we start loading the WPF dlls 
                 var webAppTask = AppHost.RunAsync();
 
                 // optionally skip starting the WPF app.
@@ -48,7 +50,7 @@ namespace StaticWebAppWpf.App
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Application has crashed due to {ex.Message}. Shutting down now...");
+                MessageBox.Show($"Application has crashed due to: {ex.Message}. Shutting down now...");
                 await Shutdown();
             }
         }

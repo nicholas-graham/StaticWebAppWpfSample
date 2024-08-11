@@ -20,14 +20,13 @@ namespace StaticWebAppWpf.App
         }
 
         /// <summary>
-        /// Starts the WPF app on a dedicated STA thread. 
+        /// Resolves the UI services and starts the WPF app on a dedicated STA thread. 
         /// </summary>
         // Ensure the method is not inlined, so you don't
         // need to load any WPF dlls in the Main method
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public void Start()
         {
-            // Manually invoke an STA thread
             var wpfAppThread = new Thread(InitializeAndRunApp);
             wpfAppThread.SetApartmentState(ApartmentState.STA);
             wpfAppThread.Start();

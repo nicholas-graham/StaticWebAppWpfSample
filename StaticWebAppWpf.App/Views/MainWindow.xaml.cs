@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Wpf;
 using StaticWebAppWpf.App.Messaging;
+using StaticWebAppWpf.App.Messaging.Interfaces;
 using System.ComponentModel;
 using System.Windows;
 

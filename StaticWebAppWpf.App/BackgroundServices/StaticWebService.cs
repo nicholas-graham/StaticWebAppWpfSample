@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
+using System.Threading;
 
 namespace StaticWebAppWpf.App.BackgroundServices
 {
@@ -9,19 +11,25 @@ namespace StaticWebAppWpf.App.BackgroundServices
     /// </summary>
     public class StaticWebService : BackgroundService
     {
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        private WebApplication? _app;
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var builder = WebApplication.CreateSlimBuilder();
-            var app = builder.Build();
-            app.UseDeveloperExceptionPage();
+            builder.Services.AddHealthChecks();
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            _app = builder.Build();
+            _app.UseDeveloperExceptionPage();
+
+            _app.UseDefaultFiles();
+            _app.UseStaticFiles();
 
             Debug.WriteLine($"Starting application, listening on port {Program.StaticWebPort}");
-            app.Urls.Add($"http://localhost:{Program.StaticWebPort}");
+            _app.Urls.Add($"http://localhost:{Program.StaticWebPort}");
 
-            return app.RunAsync(stoppingToken);
+            _app.MapHealthChecks("/healthz");
+
+            await _app!.RunAsync(stoppingToken);
         }
     }
 }

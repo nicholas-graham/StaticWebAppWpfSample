@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows;
+using StaticWebAppWpf.App.Messaging.Interfaces;
 using StaticWebAppWpf.App.Messaging.Models;
 
 namespace StaticWebAppWpf.App.Messaging
@@ -12,13 +13,17 @@ namespace StaticWebAppWpf.App.Messaging
     [ClassInterface(ClassInterfaceType.AutoDual)]
     public class GreetMessageContract : IGreetMessageContract
     {
+        public bool ShowMessage { get; set; } = true;
         /// <summary>
         /// Simple sample generates a message with a name from JavaScript, then returns that message back to JS.
         /// </summary>
         public string SayHello(string name)
         {
             var msg = $"Hello from {name}, this message was generated in .Net, with information from JavaScript.";
-            MessageBox.Show(msg, "WPF Message from JavaScript", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            if (ShowMessage)
+                MessageBox.Show(msg, "WPF Message from JavaScript", MessageBoxButton.OK, MessageBoxImage.Information);
+
             return msg;
         }
 
@@ -33,7 +38,9 @@ namespace StaticWebAppWpf.App.Messaging
             // it must be serialized, though we can return an object just fine and it becomes an object proxy in JS.
             var greetObject = JsonSerializer.Deserialize<GreetMessageObject>(greetObjectJson);
             var msg = $"Hello from {greetObject?.Name}, message is {greetObject?.Message}";
-            MessageBox.Show(msg, "WPF Message from JavaScript", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            if (ShowMessage)
+                MessageBox.Show(msg, "WPF Message from JavaScript", MessageBoxButton.OK, MessageBoxImage.Information);
 
             return new GreetMessageObject
             {
