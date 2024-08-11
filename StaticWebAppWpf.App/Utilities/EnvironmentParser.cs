@@ -11,8 +11,7 @@ namespace StaticWebAppWpf.App.Utilities
     {
         public static string GetEnvironment(string[] args)
         {
-            if (args.Length != 0 &&
-                args.Contains("-dev"))
+            if (args.Contains("-dev"))
                 return Environments.Development;
 
             return Environments.Production;

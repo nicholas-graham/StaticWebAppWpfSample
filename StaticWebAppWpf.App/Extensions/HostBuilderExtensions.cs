@@ -1,11 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StaticWebAppWpf.App.BackgroundServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StaticWebAppWpf.App.Messaging;
 
 namespace StaticWebAppWpf.App.Extensions
 {
@@ -21,6 +17,10 @@ namespace StaticWebAppWpf.App.Extensions
                     // in development we'll use the dev server in astro.
                     services.AddHostedService<StaticWebService>();
                 }
+
+                // add our greet message contract.
+                services.AddSingleton<IGreetMessageContract, GreetMessageContract>();
+                services.AddAppFactory();
             });
         }
     }

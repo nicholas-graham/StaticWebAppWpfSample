@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
-using System.Configuration;
-using System.Data;
+﻿using StaticWebAppWpf.App.Views;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace StaticWebAppWpf.App
 {
@@ -11,5 +8,13 @@ namespace StaticWebAppWpf.App
     /// </summary>
     public partial class App : Application
     {
+        private readonly MainWindow _mainWindow;
+
+        public App(MainWindow mainWindow)
+        {
+            _mainWindow = mainWindow;
+            InitializeComponent();
+            _mainWindow.Show();
+        }
     }
 }

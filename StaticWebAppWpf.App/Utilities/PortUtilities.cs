@@ -21,10 +21,8 @@ namespace StaticWebAppWpf.App.Utilities
         /// <exception cref="NullReferenceException">Thrown if there is an error retrieving the port.</exception>
         public static int GetPort(string[] args)
         {
-            if (args.Length != 0 && args.Contains("-dev"))
-            {
+            if (args.Contains("-dev"))
                 return _devPort;
-            }
 
             using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {

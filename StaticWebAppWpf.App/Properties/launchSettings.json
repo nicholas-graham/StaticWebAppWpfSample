@@ -6,6 +6,10 @@
     "StartApp (Development)": {
       "commandName": "Project",
       "commandLineArgs": "-dev"
+    },
+    "StartApp (Headless)": {
+      "commandName": "Project",
+      "commandLineArgs": "-headless"
     }
   }
 }

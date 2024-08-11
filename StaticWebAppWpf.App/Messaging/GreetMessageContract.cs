@@ -10,7 +10,7 @@ namespace StaticWebAppWpf.App.Messaging
     /// </summary>
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    public class GreetMessageContract
+    public class GreetMessageContract : IGreetMessageContract
     {
         /// <summary>
         /// Simple sample generates a message with a name from JavaScript, then returns that message back to JS.

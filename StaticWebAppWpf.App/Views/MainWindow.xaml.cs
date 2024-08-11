@@ -10,10 +10,13 @@ namespace StaticWebAppWpf.App.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IGreetMessageContract _greetMessageContract;
+
+        public MainWindow(MainWindowViewModel viewModel, IGreetMessageContract greetMessageContract)
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            DataContext = viewModel;
+            _greetMessageContract = greetMessageContract;
         }
 
         protected override async void OnClosing(CancelEventArgs e)
@@ -32,7 +35,7 @@ namespace StaticWebAppWpf.App.Views
                 if (coreWebView2 != null)
                 {
                     // Add any WebView2 messaging contracts here.
-                    coreWebView2.AddHostObjectToScript(nameof(GreetMessageContract), new GreetMessageContract());
+                    coreWebView2.AddHostObjectToScript(nameof(GreetMessageContract), _greetMessageContract);
                 }
             }
             else

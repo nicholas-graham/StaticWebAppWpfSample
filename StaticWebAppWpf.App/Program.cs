@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using StaticWebAppWpf.App.Extensions;
 using StaticWebAppWpf.App.Utilities;
 using System.Windows;
@@ -8,7 +9,12 @@ namespace StaticWebAppWpf.App
     public class Program
     {
         /// <summary>
-        /// The main app host for this application
+        /// The WPF portion of this application.
+        /// </summary>
+        public static WpfApp? WpfApp { get; private set; }
+
+        /// <summary>
+        /// The main DI host for this application
         /// </summary>
         public static IHost? AppHost { get; private set; }
 
@@ -26,13 +32,16 @@ namespace StaticWebAppWpf.App
                     .ConfigureWpfAppServices()
                     .Build();
 
+                WpfApp = AppHost.Services.GetRequiredService<WpfApp>();
+
                 StaticWebPort = PortUtilities.GetPort(args);
 
                 // store the apphost long running task and start it while we start loading the WPF dlls 
                 var webAppTask = AppHost.RunAsync();
 
-                // start the WPF app on a dedicated STA thread
-                WpfApp.Start();
+                // optionally skip starting the WPF app.
+                if (!args.Contains("-headless"))
+                    WpfApp.Start();
 
                 // await the web task
                 await webAppTask;
@@ -54,7 +63,10 @@ namespace StaticWebAppWpf.App
             if (appShutdownTask != null )
                 await appShutdownTask;
 
-            WpfApp.Shutdown();
+            // shut down the Wpf app if it is running.
+            if (WpfApp?.WpfAppThread != null &&
+                WpfApp.WpfAppThread.IsAlive)
+                WpfApp.Shutdown();
         }
     }
 }
