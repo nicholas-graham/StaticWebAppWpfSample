@@ -16,7 +16,7 @@ You can use any static web generator of your choice, in this sample I was using 
 
 If you want to modify the `Astro` site included under `StantecWebAppWpf.Web`, you'll need to [**get started**](https://docs.astro.build/en/getting-started/) with `Astro`. 
 
-Simply open the `StantecWebAppWpf.Web` folder in VsCode or your editor of choice and run `npm i` followed by `npm run dev`, then start the Wpf application. 
+Simply open the `StaticWebAppWpf.Web` folder in VsCode or your editor of choice and run `npm i` followed by `npm run dev`, then start the Wpf application. 
 
 It is pre-configured to point to the `dev` server for live development!
 
