@@ -14,7 +14,7 @@ You should be able to run the `(Production)` version by starting the `StartApp (
 
 You can use any static web generator of your choice, in this sample I was using `Astro` as it is a very flexible way to generate static sites. 
 
-If you want to modify the `Astro` site included under `StantecWebAppWpf.Web`, you'll need to [**get started**](https://docs.astro.build/en/getting-started/) with `Astro`. 
+If you want to modify the `Astro` site included under `StaticWebAppWpf.Web`, you'll need to [**get started**](https://docs.astro.build/en/getting-started/) with `Astro`. 
 
 Simply open the `StaticWebAppWpf.Web` folder in VsCode or your editor of choice and run `npm i` followed by `npm run dev`, then start the Wpf application. 
 
